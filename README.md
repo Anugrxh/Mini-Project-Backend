@@ -1,5 +1,7 @@
-🚀 Emotion Recognition API
-A powerful backend for real-time emotion detection from video streams, built with Django and Django REST Framework.
+# 🚀 Emotion Recognition API
+
+A powerful **Django + DRF backend** for real-time **emotion detection from video streams**.  
+Handles **user authentication** and **emotion analysis** with an integrated machine learning model — perfect for adding emotion intelligence to your applications.
 
 <p align="center">
 <a href="https://github.com/Anugrxh/Mini-Project-Backend/stargazers">
@@ -16,132 +18,132 @@ A powerful backend for real-time emotion detection from video streams, built wit
 </a>
 </p>
 
-🌟 Introduction
-This project is the backend for an emotion recognition system. It's a RESTful API built on Django and Django REST Framework that handles user authentication and processes video files to detect and analyze human emotions. It's designed to be a robust and scalable solution for integrating emotion detection into various applications.
+---
 
-🛠️ Technologies Used
-Backend: Django, Django REST Framework
+## 🌟 Introduction  
+This backend is part of an **Emotion Recognition System** built using Django and Django REST Framework.  
+It provides:  
+- Secure **JWT-based authentication**  
+- Video upload and **real-time emotion analysis**  
+- Scalable REST API endpoints for easy integration  
 
-Database: SQLite
+---
 
-Authentication: JWT (JSON Web Tokens)
+## 🛠️ Tech Stack  
 
-Environment Management: venv
+**Backend:** Django, Django REST Framework  
+**Database:** SQLite  
+**Authentication:** JWT (JSON Web Tokens)  
+**Machine Learning:** TensorFlow, Keras, OpenCV *(specify exact ML libs used)*  
+**Environment:** Python `venv`  
+**Media Handling:** Django's built-in file upload handling  
 
-Machine Learning: (Specify the ML libraries used, e.g., TensorFlow, Keras, OpenCV)
+---
 
-Media Handling: (Libraries for file uploads, if any)
+## ⚙️ Installation & Setup  
 
-⚙️ Installation & Setup
-Follow these steps to get a copy of the project running on your local machine for development and testing.
+### **Prerequisites**
+- Python 3.8+  
+- `pip` (Python package installer)  
 
-Prerequisites
-Python 3.8+
-
-pip (Python package installer)
-
-Step-by-Step Installation
-Clone the repository:
-
+### **Steps**
+```bash
+# 1️⃣ Clone the repository
 git clone https://github.com/Anugrxh/Mini-Project-Backend.git
 cd Mini-Project-Backend
 
-Create and activate a virtual environment:
-
+# 2️⃣ Create & activate virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
 
-Install the dependencies:
-
+# 3️⃣ Install dependencies
 pip install -r requirements.txt
 
-Note: If you don't have a requirements.txt file yet, you can create one by running pip freeze > requirements.txt after installing your packages.
-
-Run migrations:
-
+# 4️⃣ Run migrations
 python manage.py migrate
 
-Start the development server:
-
+# 5️⃣ Start the server
 python manage.py runserver
+```
+Your API will be available at: **http://127.0.0.1:8000**  
 
-The API will now be running on http://127.0.0.1:8000.
+---
 
-🎯 API Endpoints
-This section documents the main API endpoints for user authentication and emotion recognition.
+## 🎯 API Endpoints  
 
-Base URL: http://127.0.0.1:8000/api/
+**Base URL:** `http://127.0.0.1:8000/api/`  
 
-1. User Authentication
-Endpoint
+### **1. User Authentication**  
 
-Method
+#### **Signup**
+- **POST** `/signup/`  
+- Registers a new user.  
+- **Body (JSON)**:
+```json
+{
+  "full_name": "John Doe",
+  "email": "john@example.com",
+  "mobile": "9876543210",
+  "password": "StrongPass123"
+}
+```
+- **Response:** JWT token on success.
 
-Description
+#### **Login**
+- **POST** `/login/`  
+- Authenticates user & returns token.  
+- **Body (JSON)**:
+```json
+{
+  "email": "john@example.com",
+  "password": "StrongPass123"
+}
+```
+- **Response:**
+```json
+{
+  "token": "your_jwt_token"
+}
+```
 
-Request Body
+---
 
-Response
+### **2. Emotion Recognition**  
 
-/signup/
+#### **Upload & Analyze Video**
+- **POST** `/emotion-video/`  
+- **Headers:**  
+  `Authorization: Bearer <your_token>`  
+- **Body (multipart/form-data)**:  
+  Key: `video`, Value: `.mp4` file  
+- **Response:** JSON with detected emotions.
 
-POST
+**Example cURL:**
+```bash
+curl -X POST   http://127.0.0.1:8000/api/emotion-video/   -H 'Authorization: Bearer <your_login_token>'   -F 'video=@/path/to/video.mp4'
+```
 
-Registers a new user with their full name, email, mobile number, and password.
+---
 
-{"full_name": "John Doe", "email": "john@example.com", "mobile": "9876543210", "password": "StrongPass123"}
+## 🤝 Contributing  
+Contributions are welcome!  
+- Fork the repo  
+- Create a new branch  
+- Submit a PR  
+See **CONTRIBUTING.md** for details.
 
-A token on successful signup.
+---
 
-/login/
+## 📝 License  
+This project is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for details.
 
-POST
+---
 
-Authenticates a user and returns a JWT token for subsequent requests.
-
-{"email": "john@example.com", "password": "StrongPass123"}
-
-{"token": "..."}
-
-2. Emotion Recognition
-Endpoint
-
-Method
-
-Description
-
-Request Body
-
-Response
-
-/emotion-video/
-
-POST
-
-Uploads a video file (.mp4) for emotion analysis.
-
-Form Data: {"video": (file) a video file in .mp4 format}
-
-A JSON object with the results of the emotion analysis.
-
-Important Note for /emotion-video/:
-
-This endpoint requires a valid JWT token. You must include the token in the Authorization header of your request, formatted as Bearer <your_token>.
-
-The request body must be multipart/form-data. The video file should be sent using the key video.
-
-Example cURL request for /emotion-video/:
-
-curl -X POST \
-  http://127.0.0.1:8000/api/emotion-video/ \
-  -H 'Authorization: Bearer <your_login_token>' \
-  -F 'video=@/path/to/your/video.mp4'
-
-🤝 Contributing
-We welcome contributions to this project! Please see our CONTRIBUTING.md for guidelines on how to submit a pull request, report a bug, or suggest a new feature.
-
-
-📧 Contact
-Anugrah M - anugrahmadha@gmail.com
-
-Project Link: https://github.com/Anugrxh/Mini-Project-Backend
+## 📧 Contact  
+**Anugrah M**  
+📩 Email: anugrahmadha@gmail.com  
+🔗 Project Link: [Mini-Project-Backend](https://github.com/Anugrxh/Mini-Project-Backend)  
