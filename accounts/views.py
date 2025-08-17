@@ -15,6 +15,10 @@ from tensorflow.keras.models import load_model
 from .serializers import VideoUploadSerializer
 
 
+
+
+
+
 # Load model once at startup
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'fer2013_model.h5')
 model = load_model(MODEL_PATH)
@@ -141,3 +145,30 @@ class VideoEmotionAnalysisView(APIView):
 
         summary += f"\n\nTotal frames analyzed: {total_frames}"
         return summary
+
+
+
+
+from dj_rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from rest_framework.response import Response
+
+class CustomGoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+
+    def get_serializer(self, *args, **kwargs):
+        data = self.request.data.copy()
+        # print("Google Social Login request data:", data)
+        if "access" in data:
+            data["access_token"] = data.pop("access")
+        elif "id_token" in data:
+            data["id_token"] = data["id_token"]
+        kwargs["data"] = data
+        return super().get_serializer(*args, **kwargs)
+
+    def get_response(self):
+        data = {
+            "message": "Login successful!",
+            "access": getattr(self.token, "access_token", str(self.token)),
+        }
+        return Response(data)
