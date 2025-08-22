@@ -31,3 +31,11 @@ class LoginSerializer(serializers.Serializer):
 
 class VideoUploadSerializer(serializers.Serializer):
     video = serializers.FileField()
+
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'full_name', 'email', 'mobile', 'date_joined']  # Add fields as needed

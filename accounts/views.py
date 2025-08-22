@@ -2,7 +2,7 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import AccessToken
-from .serializers import SignupSerializer, LoginSerializer
+from .serializers import SignupSerializer, LoginSerializer ,UserSerializer
 import cv2
 import numpy as np
 import tempfile
@@ -172,3 +172,13 @@ class CustomGoogleLogin(SocialLoginView):
             "access": getattr(self.token, "access_token", str(self.token)),
         }
         return Response(data)
+
+
+
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
