@@ -167,3 +167,6 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP_SCOPE': [],
     }
 }
+
+
+SOCIALACCOUNT_ADAPTER = "accounts.adapters.CustomSocialAccountAdapter"
