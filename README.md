@@ -16,6 +16,8 @@ Handles **user authentication** and **emotion analysis** with an integrated mach
 <a href="https://github.com/Anugrxh/Mini-Project-Backend/blob/main/LICENSE">
 <img src="https://img.shields.io/github/license/Anugrxh/Mini-Project-Backend" alt="License">
 </a>
+
+  
 </p>
 
 ---
